@@ -27,7 +27,7 @@
 </p>
 
 <p align="center">
-English | <a href="docs/README_zh.md">简体中文</a>
+English | <a href="docs/README_zh.md">简体中文</a> | <a href="https://qfluentwidgets.com/">官网</a>
 </p>
 
 ![Interface](https://raw.githubusercontent.com/zhiyiYo/PyQt-Fluent-Widgets/master/docs/source/_static/Interface.jpg)
@@ -43,7 +43,11 @@ Or install full-featured version:
 pip install "PyQt-Fluent-Widgets[full]" -i https://pypi.org/simple/
 ```
 
-If you are using Qt5, Qt6, PySide2, PySide6 or PyQt6, you can download the code in [Qt5](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/Qt5), [Qt6](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/Qt6), [PySide2](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PySide2), [PySide6](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PySide6) or [PyQt6](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PyQt6) branch.
+If you are using PySide2, PySide6 or PyQt6, you can download the code in [PySide2](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PySide2), [PySide6](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PySide6) or [PyQt6](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PyQt6) branch.
+
+The [Pro version](https://qfluentwidgets.com/pages/pro) library contains more advance components. You can download `PySide6-Fluent-Widgets-Pro-Gallery.7z` from the [release page](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/releases) for preview purposes.
+
+C++ QFluentWidgets require purchasing a license from the [official website](https://qfluentwidgets.com/price) and contact [shokokawaii@foxmail.com](mailto:shokokawaii@foxmail.com) to retrieve the library. You can also download the compiled demo `QFluentWidgets_v*.*.*.zip` from the [release page](https://github.com/zhiyiYo/PyQt-Fluent-Widgets/releases).
 
 > **Warning**
 > Don't install PyQt-Fluent-Widgets, PyQt6-Fluent-Widgets, PySide2-Fluent-Widgets and PySide6-Fluent-Widgets at the same time, because their package names are all `qfluentwidgets`.

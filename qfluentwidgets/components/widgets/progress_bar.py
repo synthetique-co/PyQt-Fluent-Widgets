@@ -20,6 +20,8 @@ class ProgressBar(QProgressBar):
         self._useAni = useAni
         self.lightBackgroundColor = QColor(0, 0, 0, 155)
         self.darkBackgroundColor = QColor(255, 255, 255, 155)
+        self._lightBarColor = QColor()
+        self._darkBarColor = QColor()
         self.ani = QPropertyAnimation(self, b'val', self)
 
         self._isPaused = False
@@ -50,6 +52,24 @@ class ProgressBar(QProgressBar):
         self.ani.setDuration(150)
         self.ani.start()
         super().setValue(value)
+
+    def lightBarColor(self):
+        return self._lightBarColor if self._lightBarColor.isValid() else themeColor()
+
+    def darkBarColor(self):
+        return self._darkBarColor if self._darkBarColor.isValid() else themeColor()
+
+    def setCustomBarColor(self, light, dark):
+        """ set the custom bar color
+
+        Parameters
+        ----------
+        light, dark: str | Qt.GlobalColor | QColor
+            bar color in light/dark theme mode
+        """
+        self._lightBarColor = QColor(light)
+        self._darkBarColor = QColor(dark)
+        self.update()
 
     def setCustomBackgroundColor(self, light, dark):
         """ set the custom background color
@@ -93,6 +113,15 @@ class ProgressBar(QProgressBar):
     def isError(self):
         return self._isError
 
+    def barColor(self):
+        if self.isPaused():
+            return QColor(252, 225, 0) if isDarkTheme() else QColor(157, 93, 0)
+
+        if self.isError():
+            return QColor(255, 153, 164) if isDarkTheme() else QColor(196, 43, 28)
+
+        return self.darkBarColor() if isDarkTheme() else self.lightBarColor()
+
     def valText(self):
         if self.maximum() <= self.minimum():
             return ""
@@ -126,7 +155,7 @@ class ProgressBar(QProgressBar):
 
         # draw bar
         painter.setPen(Qt.NoPen)
-        painter.setBrush(themeColor())
+        painter.setBrush(self.barColor())
         w = int(self.val / (self.maximum() - self.minimum()) * self.width())
         r = self.height() / 2
         painter.drawRoundedRect(0, 0, w, self.height(), r, r)
@@ -144,6 +173,9 @@ class IndeterminateProgressBar(QProgressBar):
         self._longPos = 0
         self.shortBarAni = QPropertyAnimation(self, b'shortPos', self)
         self.longBarAni = QPropertyAnimation(self, b'longPos', self)
+
+        self._lightBarColor = QColor()
+        self._darkBarColor = QColor()
 
         self._isError = False
 
@@ -168,6 +200,24 @@ class IndeterminateProgressBar(QProgressBar):
 
         if start:
             self.start()
+
+    def lightBarColor(self):
+        return self._lightBarColor if self._lightBarColor.isValid() else themeColor()
+
+    def darkBarColor(self):
+        return self._darkBarColor if self._darkBarColor.isValid() else themeColor()
+
+    def setCustomBarColor(self, light, dark):
+        """ set the custom bar color
+
+        Parameters
+        ----------
+        light, dark: str | Qt.GlobalColor | QColor
+            bar color in light/dark theme mode
+        """
+        self._lightBarColor = QColor(light)
+        self._darkBarColor = QColor(dark)
+        self.update()
 
     @pyqtProperty(float)
     def shortPos(self):
@@ -232,19 +282,21 @@ class IndeterminateProgressBar(QProgressBar):
     def isError(self):
         return self._isError
 
+    def barColor(self):
+        if self.isError():
+            return QColor(255, 153, 164) if isDarkTheme() else QColor(196, 43, 28)
+
+        if self.isPaused():
+            return QColor(252, 225, 0) if isDarkTheme() else QColor(157, 93, 0)
+
+        return self.darkBarColor() if isDarkTheme() else self.lightBarColor()
+
     def paintEvent(self, e):
         painter = QPainter(self)
         painter.setRenderHints(QPainter.Antialiasing)
 
         painter.setPen(Qt.NoPen)
-
-        if self.aniGroup.state() == QPropertyAnimation.Running:
-            painter.setBrush(themeColor())
-        elif self.aniGroup.state() == QPropertyAnimation.Paused:
-            painter.setBrush(
-                QColor(252, 225, 0) if isDarkTheme() else QColor(157, 93, 0))
-        elif self._isError:
-            painter.setBrush(QColor(196, 43, 28))
+        painter.setBrush(self.barColor())
 
         # draw short bar
         x = int((self.shortPos - 0.4) * self.width())

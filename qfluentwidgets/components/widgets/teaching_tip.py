@@ -107,7 +107,7 @@ class TeachTipBubble(QWidget):
         painter.setBrush(
             QColor(40, 40, 40) if isDarkTheme() else QColor(248, 248, 248))
         painter.setPen(
-            QColor(23, 23, 23) if isDarkTheme() else QColor(195, 195, 195))
+            QColor(23, 23, 23) if isDarkTheme() else QColor(0, 0, 0, 17))
 
         self.manager.draw(self, painter)
 
@@ -312,9 +312,8 @@ class TeachingTipManager(QObject):
         x, y = pos.x(), pos.y()
 
         rect = QApplication.screenAt(QCursor.pos()).availableGeometry()
-        x = min(max(-2, x) if QCursor().pos().x() >=
-                0 else x, rect.right() - tip.width() - 4)
-        y = min(max(-2, y), rect.height() - tip.height() - 4)
+        x = max(rect.left(), min(pos.x(), rect.right() - tip.width() - 4))
+        y = max(rect.top(), min(pos.y(), rect.bottom() - tip.height() - 4))
 
         return QPoint(x, y)
 

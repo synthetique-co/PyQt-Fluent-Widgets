@@ -15,7 +15,14 @@ from .menu import RoundMenu, MenuAnimationType
 
 
 class PushButton(QPushButton):
-    """ push button """
+    """ Push button
+
+    Constructors
+    ------------
+    * PushButton(`parent`: QWidget = None)
+    * PushButton(`text`: str, `parent`: QWidget = None, `icon`: QIcon | str | FluentIconBase = None)
+    * PushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     @singledispatchmethod
     def __init__(self, parent: QWidget = None):
@@ -33,6 +40,14 @@ class PushButton(QPushButton):
         self.__init__(parent=parent)
         self.setText(text)
         self.setIcon(icon)
+
+    @__init__.register
+    def _(self, icon: QIcon, text: str, parent: QWidget = None):
+        self.__init__(text, parent, icon)
+
+    @__init__.register
+    def _(self, icon: FluentIconBase, text: str, parent: QWidget = None):
+        self.__init__(text, parent, icon)
 
     def _postInit(self):
         pass
@@ -98,7 +113,14 @@ class PushButton(QPushButton):
 
 
 class PrimaryPushButton(PushButton):
-    """ Primary color push button """
+    """ Primary color push button
+
+    Constructors
+    ------------
+    * PrimaryPushButton(`parent`: QWidget = None)
+    * PrimaryPushButton(`text`: str, `parent`: QWidget = None, `icon`: QIcon | str | FluentIconBase = None)
+    * PrimaryPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     def _drawIcon(self, icon, painter, rect, state=QIcon.Off):
         if isinstance(icon, FluentIconBase) and self.isEnabled():
@@ -114,11 +136,25 @@ class PrimaryPushButton(PushButton):
 
 
 class TransparentPushButton(PushButton):
-    """ Transparent push button """
+    """ Transparent push button
+
+    Constructors
+    ------------
+    * TransparentPushButton(`parent`: QWidget = None)
+    * TransparentPushButton(`text`: str, `parent`: QWidget = None, `icon`: QIcon | str | FluentIconBase = None)
+    * TransparentPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
 
 class ToggleButton(PushButton):
-    """ Toggle push button """
+    """ Toggle push button
+
+    Constructors
+    ------------
+    * ToggleButton(`parent`: QWidget = None)
+    * ToggleButton(`text`: str, `parent`: QWidget = None, `icon`: QIcon | str | FluentIconBase = None)
+    * ToggleButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     def _postInit(self):
         self.setCheckable(True)
@@ -135,11 +171,26 @@ TogglePushButton = ToggleButton
 
 
 class TransparentTogglePushButton(TogglePushButton):
-    """ Transparent toggle push button """
+    """ Transparent toggle push button
+
+    Constructors
+    ------------
+    * TransparentTogglePushButton(`parent`: QWidget = None)
+    * TransparentTogglePushButton(`text`: str, `parent`: QWidget = None,
+                                  `icon`: QIcon | str | FluentIconBase = None)
+    * TransparentTogglePushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
 
 class HyperlinkButton(PushButton):
-    """ Hyperlink button """
+    """ Hyperlink button
+
+    Constructors
+    ------------
+    * HyperlinkButton(`parent`: QWidget = None)
+    * HyperlinkButton(`url`: str, `text`: str, `parent`: QWidget = None,
+                      `icon`: QIcon | str | FluentIconBase = None)
+    """
 
     @singledispatchmethod
     def __init__(self, parent: QWidget = None):
@@ -156,6 +207,14 @@ class HyperlinkButton(PushButton):
         self.setText(text)
         self.url.setUrl(url)
         self.setIcon(icon)
+
+    @__init__.register
+    def _(self, icon: QIcon, url: str, text: str, parent: QWidget = None):
+        self.__init__(url, text, parent, icon)
+
+    @__init__.register
+    def _(self, icon: FluentIconBase, url: str, text: str, parent: QWidget = None):
+        self.__init__(url, text, parent, icon)
 
     def getUrl(self):
         return self._url
@@ -181,7 +240,14 @@ class HyperlinkButton(PushButton):
 
 
 class RadioButton(QRadioButton):
-    """ Radio button """
+    """ Radio button
+
+    Constructors
+    ------------
+    * RadioButton(`parent`: QWidget = None)
+    * RadioButton(`url`: text, `text`: str, `parent`: QWidget = None,
+                  `icon`: QIcon | str | FluentIconBase = None)
+    """
 
     @singledispatchmethod
     def __init__(self, parent: QWidget = None):
@@ -195,7 +261,13 @@ class RadioButton(QRadioButton):
 
 
 class ToolButton(QToolButton):
-    """ Tool button """
+    """ Tool button
+
+    Constructors
+    ------------
+    * ToolButton(`parent`: QWidget = None)
+    * ToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     @singledispatchmethod
     def __init__(self, parent: QWidget = None):
@@ -281,11 +353,23 @@ class ToolButton(QToolButton):
 
 
 class TransparentToolButton(ToolButton):
-    """ Transparent background tool button """
+    """ Transparent background tool button
+
+    Constructors
+    ------------
+    * TransparentToolButton(`parent`: QWidget = None)
+    * TransparentToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
 
 class PrimaryToolButton(ToolButton):
-    """ Primary color tool button """
+    """ Primary color tool button
+
+    Constructors
+    ------------
+    * PrimaryToolButton(`parent`: QWidget = None)
+    * PrimaryToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     def _drawIcon(self, icon, painter: QPainter, rect: QRectF, state=QIcon.Off):
         if isinstance(icon, FluentIconBase) and self.isEnabled():
@@ -304,7 +388,13 @@ class PrimaryToolButton(ToolButton):
 
 
 class ToggleToolButton(ToolButton):
-    """ Toggle tool button """
+    """ Toggle tool button
+
+    Constructors
+    ------------
+    * ToggleToolButton(`parent`: QWidget = None)
+    * ToggleToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     def _postInit(self):
         self.setCheckable(True)
@@ -318,7 +408,13 @@ class ToggleToolButton(ToolButton):
 
 
 class TransparentToggleToolButton(ToggleToolButton):
-    """ Transparent toggle tool button """
+    """ Transparent toggle tool button
+
+    Constructors
+    ------------
+    * TransparentToggleToolButton(`parent`: QWidget = None)
+    * TransparentToggleToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
 
 class DropDownButtonBase:
@@ -383,7 +479,15 @@ class DropDownButtonBase:
 
 
 class DropDownPushButton(DropDownButtonBase, PushButton):
-    """ Drop down push button """
+    """ Drop down push button
+
+    Constructors
+    ------------
+    * DropDownPushButton(`parent`: QWidget = None)
+    * DropDownPushButton(`text`: str, `parent`: QWidget = None,
+                         `icon`: QIcon | str | FluentIconBase = None)
+    * DropDownPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     def mouseReleaseEvent(self, e):
         PushButton.mouseReleaseEvent(self, e)
@@ -395,11 +499,25 @@ class DropDownPushButton(DropDownButtonBase, PushButton):
 
 
 class TransparentDropDownPushButton(DropDownPushButton):
-    """ Transparent drop down push button """
+    """ Transparent drop down push button
+
+    Constructors
+    ------------
+    * TransparentDropDownPushButton(`parent`: QWidget = None)
+    * TransparentDropDownPushButton(`text`: str, `parent`: QWidget = None,
+                                    `icon`: QIcon | str | FluentIconBase = None)
+    * TransparentDropDownPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
 
 class DropDownToolButton(DropDownButtonBase, ToolButton):
-    """ Drop down tool button """
+    """ Drop down tool button
+
+    Constructors
+    ------------
+    * DropDownToolButton(`parent`: QWidget = None)
+    * DropDownToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     def mouseReleaseEvent(self, e):
         ToolButton.mouseReleaseEvent(self, e)
@@ -415,7 +533,13 @@ class DropDownToolButton(DropDownButtonBase, ToolButton):
 
 
 class TransparentDropDownToolButton(DropDownToolButton):
-    """ Transparent drop down tool button """
+    """ Transparent drop down tool button
+
+    Constructors
+    ------------
+    * TransparentDropDownToolButton(`parent`: QWidget = None)
+    * TransparentDropDownToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
 
 class PrimaryDropDownButtonBase(DropDownButtonBase):
@@ -427,7 +551,15 @@ class PrimaryDropDownButtonBase(DropDownButtonBase):
 
 
 class PrimaryDropDownPushButton(PrimaryDropDownButtonBase, PrimaryPushButton):
-    """ Primary color drop down push button """
+    """ Primary color drop down push button
+
+    Constructors
+    ------------
+    * PrimaryDropDownPushButton(`parent`: QWidget = None)
+    * PrimaryDropDownPushButton(`text`: str, `parent`: QWidget = None,
+                                `icon`: QIcon | str | FluentIconBase = None)
+    * PrimaryDropDownPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     def mouseReleaseEvent(self, e):
         PrimaryPushButton.mouseReleaseEvent(self, e)
@@ -439,7 +571,13 @@ class PrimaryDropDownPushButton(PrimaryDropDownButtonBase, PrimaryPushButton):
 
 
 class PrimaryDropDownToolButton(PrimaryDropDownButtonBase, PrimaryToolButton):
-    """ Primary drop down tool button """
+    """ Primary drop down tool button
+
+    Constructors
+    ------------
+    * PrimaryDropDownToolButton(`parent`: QWidget = None)
+    * PrimaryDropDownToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     def mouseReleaseEvent(self, e):
         PrimaryToolButton.mouseReleaseEvent(self, e)
@@ -560,7 +698,13 @@ class SplitWidgetBase(QWidget):
 
 
 class SplitPushButton(SplitWidgetBase):
-    """ Split push button """
+    """ Split push button
+
+    Constructors
+    ------------
+    * SplitPushButton(`parent`: QWidget = None)
+    * SplitPushButton(`text`: str, `parent`: QWidget = None, `icon`: QIcon | str | FluentIconBase = None)
+    """
 
     clicked = pyqtSignal()
 
@@ -578,6 +722,14 @@ class SplitPushButton(SplitWidgetBase):
         self.__init__(parent)
         self.setText(text)
         self.setIcon(icon)
+
+    @__init__.register
+    def _(self, icon: QIcon, text: str, parent: QWidget = None):
+        self.__init__(text, parent, icon)
+
+    @__init__.register
+    def _(self, icon: FluentIconBase, text: str, parent: QWidget = None):
+        self.__init__(text, parent, icon)
 
     def _postInit(self):
         pass
@@ -603,7 +755,15 @@ class SplitPushButton(SplitWidgetBase):
 
 
 class PrimarySplitPushButton(SplitPushButton):
-    """ Primary split push button """
+    """ Primary split push button
+
+    Constructors
+    ------------
+    * PrimarySplitPushButton(`parent`: QWidget = None)
+    * PrimarySplitPushButton(`text`: str, `parent`: QWidget = None,
+                             `icon`: QIcon | str | FluentIconBase = None)
+    * PrimarySplitPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     def _postInit(self):
         self.setDropButton(PrimarySplitDropButton(self))
@@ -618,7 +778,13 @@ class PrimarySplitPushButton(SplitPushButton):
 
 
 class SplitToolButton(SplitWidgetBase):
-    """ Split tool button """
+    """ Split tool button
+
+    Constructors
+    ------------
+    * SplitToolButton(`parent`: QWidget = None)
+    * SplitToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     clicked = pyqtSignal()
 
@@ -662,7 +828,13 @@ class SplitToolButton(SplitWidgetBase):
 
 
 class PrimarySplitToolButton(SplitToolButton):
-    """ Primary split push button """
+    """ Primary split push button
+
+    Constructors
+    ------------
+    * PrimarySplitToolButton(`parent`: QWidget = None)
+    * PrimarySplitToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     def _postInit(self):
         self.setDropButton(PrimarySplitDropButton(self))
@@ -719,7 +891,15 @@ class PillButtonBase:
 
 
 class PillPushButton(TogglePushButton, PillButtonBase):
-    """ Pill push button """
+    """ Pill push button
+
+    Constructors
+    ------------
+    * PillPushButton(`parent`: QWidget = None)
+    * PillPushButton(`text`: str, `parent`: QWidget = None,
+                     `icon`: QIcon | str | FluentIconBase = None)
+    * PillPushButton(`icon`: QIcon | FluentIcon, `text`: str, `parent`: QWidget = None)
+    """
 
     def paintEvent(self, e):
         PillButtonBase.paintEvent(self, e)
@@ -727,7 +907,13 @@ class PillPushButton(TogglePushButton, PillButtonBase):
 
 
 class PillToolButton(ToggleToolButton, PillButtonBase):
-    """ Pill push button """
+    """ Pill push button
+
+    Constructors
+    ------------
+    * PillToolButton(`parent`: QWidget = None)
+    * PillToolButton(`icon`: QIcon | str | FluentIconBase, `parent`: QWidget = None)
+    """
 
     def paintEvent(self, e):
         PillButtonBase.paintEvent(self, e)

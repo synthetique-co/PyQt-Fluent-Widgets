@@ -111,14 +111,14 @@ class Indicator(ToolButton):
 
             return QColor(255, 255, 255, 96) if isDark else QColor(0, 0, 0, 91)
 
-    @pyqtProperty(float)
-    def sliderX(self):
+    def getSliderX(self):
         return self._sliderX
 
-    @sliderX.setter
-    def sliderX(self, x):
-        self._sliderX = x
+    def setSliderX(self, x):
+        self._sliderX = max(x, 5)
         self.update()
+
+    sliderX = pyqtProperty(float, getSliderX, setSliderX)
 
 
 class IndicatorPosition(Enum):
@@ -128,7 +128,13 @@ class IndicatorPosition(Enum):
 
 
 class SwitchButton(QWidget):
-    """ Switch button class """
+    """ Switch button class
+
+    Constructors
+    ------------
+    * SwitchButton(`parent`: QWidget = None)
+    * SwitchButton(`text`: str = "Off", `parent`: QWidget = None, `indicatorPos`=IndicatorPosition.LEFT)
+    """
 
     checkedChanged = pyqtSignal(bool)
 
